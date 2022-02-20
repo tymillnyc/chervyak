@@ -1,2 +1,3 @@
-# chervyak
-chervyak - игра змейка на языке Haskell
+# червяк
+червяк - игра змейка на языке Haskell  
+:shipit:
