@@ -6,7 +6,7 @@ cabal-version: 1.12
 
 name:           chervyak
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/chervyak#readme>
+description:    Please see the README on GitHub at <https://github.com/githubuser/chervyak
 homepage:       https://github.com/githubuser/chervyak#readme
 bug-reports:    https://github.com/githubuser/chervyak/issues
 author:         Author name here
@@ -32,6 +32,8 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , gloss
+    , random
   default-language: Haskell2010
 
 executable chervyak-exe
@@ -44,6 +46,8 @@ executable chervyak-exe
   build-depends:
       base >=4.7 && <5
     , chervyak
+    , gloss
+    , random
   default-language: Haskell2010
 
 test-suite chervyak-test
@@ -57,4 +61,6 @@ test-suite chervyak-test
   build-depends:
       base >=4.7 && <5
     , chervyak
+    , gloss
+    , random
   default-language: Haskell2010
