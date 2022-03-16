@@ -1,18 +1,17 @@
 module DrawApp where 
 import Shared
 import Graphics.Gloss
-import System.Random
 
 drawApp :: AppState -> Picture
 drawApp state = pictures
-    [ drawBorders state
+    [ drawBorders
     , drawFood state
     , drawSnake state
     , drawGameOver state
     ]
  
-drawBorders :: AppState -> Picture
-drawBorders state = pictures [ fillBorder (fromIntegral columns / 2, 0) (fromIntegral windowWidth + windowScale, windowScale)
+drawBorders :: Picture
+drawBorders  = pictures [ fillBorder (fromIntegral columns / 2, 0) (fromIntegral windowWidth + windowScale, windowScale)
                                 , fillBorder (fromIntegral columns / 2, fromIntegral rows) (fromIntegral windowWidth + windowScale, windowScale)
                                 , fillBorder (0, fromIntegral rows / 2) (windowScale, fromIntegral windowHeight)
                                 , fillBorder (fromIntegral columns, 12) (windowScale, fromIntegral windowHeight) ]

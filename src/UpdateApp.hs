@@ -1,6 +1,5 @@
 module UpdateApp where 
 import Shared
-import Graphics.Gloss
 import System.Random
 --update app 
 updateApp :: Float -> AppState -> AppState
