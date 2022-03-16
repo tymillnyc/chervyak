@@ -20,17 +20,16 @@ initState = AppState {
  
 -- handle keys
 handleEvent :: Event -> AppState -> AppState
-handleEvent (EventKey (SpecialKey KeyLeft ) Down _ _) state = 
-  state {direction = CrawlLeft}
-handleEvent (EventKey (SpecialKey KeyRight) Down _ _) state = 
-  state {direction = CrawlRight}
-handleEvent (EventKey (SpecialKey KeyUp   ) Down _ _) state = 
-  state {direction = CrawlUp}
-handleEvent (EventKey (SpecialKey KeyDown ) Down _ _) state = 
-  state {direction = CrawlDown}
-handleEvent (EventKey (SpecialKey KeySpace ) Down _ _) state = if isGameOver state 
-                                                                  then initState
-                                                                  else state
+handleEvent (EventKey (SpecialKey keyButton) Down _ _) state = 
+  case keyButton of
+  KeyLeft -> state {direction = CrawlLeft}
+  KeyRight -> state {direction = CrawlRight}
+  KeyUp -> state {direction = CrawlUp}
+  KeyDown -> state {direction = CrawlDown}
+  KeySpace -> if isGameOver state 
+     then initState
+     else state
+
   
 handleEvent _ state = state
  

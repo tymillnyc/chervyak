@@ -16,7 +16,7 @@ windowWidth :: Int
 windowWidth = 640
 
 windowHeight :: Int
-windowHeight = 480
+windowHeight = 640
 
 windowSize :: (Int, Int)
 windowSize = (windowWidth, windowHeight)

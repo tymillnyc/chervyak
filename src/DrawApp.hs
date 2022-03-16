@@ -11,16 +11,21 @@ drawApp state = pictures
     ]
  
 drawBorders :: Picture
-drawBorders  = pictures [ fillBorder (fromIntegral columns / 2, 0) (fromIntegral windowWidth + windowScale, windowScale)
-                                , fillBorder (fromIntegral columns / 2, fromIntegral rows) (fromIntegral windowWidth + windowScale, windowScale)
-                                , fillBorder (0, fromIntegral rows / 2) (windowScale, fromIntegral windowHeight)
-                                , fillBorder (fromIntegral columns, 12) (windowScale, fromIntegral windowHeight) ]
+drawBorders  = pictures 
+              [ fillBorder (fromIntegral columns / 2, 0) size1
+              , fillBorder (fromIntegral columns / 2, fromIntegral rows) size1
+              , fillBorder (0, fromIntegral rows / 2) size2
+              , fillBorder (fromIntegral columns, fromIntegral rows / 2) size2 
+              ]
+              where size1 = (fromIntegral windowWidth + windowScale, windowScale)
+                    size2 = (windowScale, fromIntegral windowHeight)
  
 fillBorder :: (Float, Float) -> (Float, Float) -> Picture
-fillBorder (tx, ty) (w, h) = color borderColor $ 
-                             scale 1 (-1) $ 
-                             translate (tx * windowScale - fromIntegral windowWidth / 2) (ty * windowScale - fromIntegral windowHeight / 2) $ 
-                              rectangleSolid w h
+fillBorder (dx, dy) (width, height) = color borderColor $
+                             translate x y $ 
+                              rectangleSolid width height
+                              where x = (dx * windowScale - fromIntegral windowWidth / 2)
+                                    y = (dy * windowScale - fromIntegral windowHeight / 2)
  
 drawFood :: AppState -> Picture
 drawFood state = drawCell foodColor (foodCoordinates state)
@@ -28,7 +33,7 @@ drawFood state = drawCell foodColor (foodCoordinates state)
 drawSnake :: AppState -> Picture
 drawSnake state = case snakeCoordinates state of
         (x : xs) -> pictures (drawCell wormHeadColor x : map (drawCell wormColor) xs)
-        _ -> blank
+        _ -> pictures []
  
 drawCell :: Color -> (Int, Int) -> Picture
 drawCell c (x, y) =
@@ -55,4 +60,4 @@ drawGameOver state = if isGameOver state
           scale 0.3 0.3 $ 
           text "Press SPACE to try again"
         ]
-    else blank
+    else pictures []
