@@ -33,6 +33,7 @@ library
       Paths_chervyak
   hs-source-dirs:
       src
+  ghc-options: -Wall -Werror
   build-depends:
       base >=4.7 && <5
     , gloss
