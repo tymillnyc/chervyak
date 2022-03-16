@@ -25,7 +25,10 @@ source-repository head
 
 library
   exposed-modules:
+      DrawApp
       Lib
+      Shared
+      UpdateApp
   other-modules:
       Paths_chervyak
   hs-source-dirs:
