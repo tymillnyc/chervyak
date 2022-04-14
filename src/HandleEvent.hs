@@ -3,7 +3,7 @@ import Shared
 import InitState
 import Graphics.Gloss.Interface.Pure.Game
 
--- handle keys
+-- handle event based on current screen
 handleEvent :: Event -> AppState -> AppState
 handleEvent event state = 
   case screen state of
@@ -12,6 +12,9 @@ handleEvent event state =
     Table -> handleTable event state
     Game -> handleMotion event state
 
+-- if char button pressed then add this char to name
+-- if backspace(\b) pressed then delete last symbol from name
+-- if enter pressed then name is entered and we need to go to other screen
 handleText :: Event -> AppState -> AppState
 handleText (EventKey (SpecialKey keyButton) Down _ _) state = 
   case keyButton of
@@ -27,11 +30,14 @@ handleText (EventKey (Char key) Down _ _) state =
     
 handleText _ state = state
 
+-- function to delete last character
 deleteLast :: [a] -> [a]
 deleteLast []     = []
 deleteLast [_]    = []
 deleteLast (h : t)  =[h] ++ deleteLast t
 
+-- menu tiles selection
+-- if down(up) pressed then select an item down(upper) to current item
 handleMenu :: Event -> AppState -> AppState
 handleMenu (EventKey (SpecialKey keyButton) Down _ _) state = 
   case keyButton of
@@ -45,6 +51,8 @@ handleMenu (EventKey (SpecialKey keyButton) Down _ _) state =
       _ -> state
 handleMenu _ state = state
 
+
+-- here we are not doing anything so just enter to exit table to menu
 handleTable :: Event -> AppState -> AppState
 handleTable (EventKey (SpecialKey keyButton) Down _ _) state = 
   case keyButton of
@@ -52,6 +60,9 @@ handleTable (EventKey (SpecialKey keyButton) Down _ _) state =
     _ -> state
 handleTable _ state = state
 
+
+-- changing snake direction according to button pressed
+-- if snake is dead then pressing space reverts to menu
 handleMotion :: Event -> AppState -> AppState
 handleMotion (EventKey (SpecialKey keyButton) Down _ _) state = 
   case keyButton of
@@ -65,6 +76,7 @@ handleMotion (EventKey (SpecialKey keyButton) Down _ _) state =
   _ -> state
 handleMotion _ state = state
 
+-- so snake won't kill itself by moving opposite direction
 changeDirection :: Direction -> Direction -> AppState -> AppState
 changeDirection CrawlRight CrawlLeft state = state{direction = CrawlRight}
 changeDirection CrawlDown CrawlUp state = state{direction = CrawlDown}

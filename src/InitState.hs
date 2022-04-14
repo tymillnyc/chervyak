@@ -4,6 +4,10 @@ import System.Random
 
 -- initial structure
 -- snake spawns in the center and has a head and one tail cell
+-- name is empty
+-- visible is true; then will change between true and false every fps
+-- selected menu field is the top one
+-- fake table of records
 initState :: AppState
 initState = AppState {
   snakeCoordinates = [(dx, dy), (dx - 1, dy)]

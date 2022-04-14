@@ -1,19 +1,21 @@
 module UpdateApp where 
 import Shared
 import System.Random
---update app 
+
+-- decide which function to use based on current screen
 updateApp :: Float -> AppState -> AppState
 updateApp upd state = 
   case screen state of
     NameField -> updateTextField upd state
-    Menu -> state
-    Table -> state
+    Menu -> state -- don't need to update anything
+    Table -> state -- don't need to update anything
     Game -> updateGame upd state
  
+-- flickering
 updateTextField :: Float -> AppState -> AppState
 updateTextField _ appState = appState{visible = not (visible appState)}
-  
 
+-- snake movement and analyzing if snake is dead; also generating food
 updateGame :: Float -> AppState -> AppState
 updateGame _ appState
   | isGameOver appState = appState
@@ -33,7 +35,8 @@ updateGame _ appState
                 CrawlRight -> (x + 1, y)
                 CrawlDown -> (x, y - 1)
                 CrawlLeft -> (x - 1, y)
-        
+
+-- generating food at random coordinates that are not snake coordinates     
 generateNewFood :: AppState -> AppState
 generateNewFood appState = if isSnake (dx, dy) (snakeCoordinates appState) 
                            then generateNewFood appState 

@@ -64,7 +64,7 @@ rows = snd windowSize `div` round windowScale
 -- Directions of the game
 data Direction = CrawlUp | CrawlDown | CrawlLeft | CrawlRight deriving Eq
 
---Game screens
+-- Game screens
 data Screen = NameField | Menu | Table | Game deriving Eq
 
 
@@ -73,8 +73,9 @@ type Food = (Int, Int)
 -- where all parts of snake located on the grid
 type Snake = [(Int, Int)]
 
+-- one record --name-score--
 type Record = (String, Int)
-
+-- table of records
 type Records = [Record]
 
 -- main structure
@@ -83,6 +84,11 @@ type Records = [Record]
 -- direction - direction where snake goes right now
 -- generator - generator for random food generation
 -- isGameOver - a flag that indicates whether the game is ovet not
+-- screen - current game screen
+-- name - player name
+-- visible - variable for text field indicator(for it to flicker)
+-- selected - selected menu tile
+-- records - table of records
 data AppState = AppState {
   snakeCoordinates :: Snake
 , foodCoordinates :: Food

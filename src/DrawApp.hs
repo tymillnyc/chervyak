@@ -2,6 +2,7 @@ module DrawApp where
 import Shared
 import Graphics.Gloss
 
+-- see what screen to show and return the right function to draw it
 drawApp :: AppState -> Picture
 drawApp state = 
   case screen state of
@@ -10,12 +11,14 @@ drawApp state =
     Table -> drawTable state
     Game -> drawGame state
   
+-- drawing first screen name field
 drawNameField :: AppState -> Picture
 drawNameField state = pictures 
     [ drawBorders
     , drawTextField state
     ]
 
+-- text field where user will print his/her name
 drawTextField :: AppState -> Picture
 drawTextField state = pictures
         [ color foodColor $ 
@@ -25,7 +28,7 @@ drawTextField state = pictures
        ,  color (if (visible state) then blue else grassColor) $ 
           translate (-250) (-100) $ 
           scale 0.3 0.3 $ 
-          text ((name state) ++ "|")
+          text ((name state) ++ "|") -- this one for flickering
        ,  color blue $ 
           translate (-250) (-100) $ 
           scale 0.3 0.3 $ 
@@ -41,12 +44,14 @@ drawTextField state = pictures
           )
         ]
  
+-- drawing menu
 drawMenu :: AppState -> Picture
 drawMenu state = pictures
     [ drawBorders
     , drawMenuElements state
     ]
 
+-- each menu element (will appear red if selected)
 drawMenuElements :: AppState -> Picture
 drawMenuElements state = pictures
       [ color wormColor $ 
@@ -71,12 +76,14 @@ drawMenuElements state = pictures
         text (name state)
         ]
 
+-- draw table of records
 drawTable :: AppState -> Picture
 drawTable state = pictures 
     [ drawBorders
     , drawTableElements state
     ]
 
+-- draw title and ending and the table between them
 drawTableElements :: AppState -> Picture
 drawTableElements state = pictures(
           ([
@@ -90,7 +97,7 @@ drawTableElements state = pictures(
             text "exit"
           ]) ++ (tableTiles (records state) 50))
         
-
+-- each element of table of records
 tableTiles :: Records -> Float -> [Picture]
 tableTiles [] _ = []
 tableTiles (x:xs) offset = 
@@ -99,6 +106,7 @@ tableTiles (x:xs) offset =
         scale 0.2 0.2 $
         text ((fst x) ++ " " ++ show (snd x))) : (tableTiles xs (offset + 50.0)))
 
+-- draw game
 drawGame :: AppState -> Picture
 drawGame state = pictures
     [ drawBorders
@@ -107,6 +115,7 @@ drawGame state = pictures
     , drawGameOver state
     ]
 
+-- nice screen borders
 drawBorders :: Picture
 drawBorders  = pictures 
               [ fillBorder (fromIntegral columns / 2, 0) size1
@@ -117,6 +126,7 @@ drawBorders  = pictures
               where size1 = (fromIntegral windowWidth + windowScale, windowScale)
                     size2 = (windowScale, fromIntegral windowHeight)
  
+-- function to fill the border
 fillBorder :: (Float, Float) -> (Float, Float) -> Picture
 fillBorder (dx, dy) (width, height) = color borderColor $
                              translate x y $ 
@@ -124,20 +134,24 @@ fillBorder (dx, dy) (width, height) = color borderColor $
                               where x = (dx * windowScale - fromIntegral windowWidth / 2)
                                     y = (dy * windowScale - fromIntegral windowHeight / 2)
  
+-- draw food at its coordinates
 drawFood :: AppState -> Picture
 drawFood state = drawCell foodColor (foodCoordinates state)
  
+-- draw each piece of snake at its coordinates
 drawSnake :: AppState -> Picture
 drawSnake state = case snakeCoordinates state of
         (x : xs) -> pictures (drawCell wormHeadColor x : map (drawCell wormColor) xs)
         _ -> pictures []
  
+-- one cell drawing
 drawCell :: Color -> (Int, Int) -> Picture
 drawCell c (x, y) =
     color c $ translate dx dy (rectangleSolid windowScale windowScale)
     where dx = windowScale * fromIntegral x - (fromIntegral windowWidth / 2)
           dy = windowScale * fromIntegral y  - (fromIntegral windowHeight / 2)
  
+-- game over screen
 drawGameOver :: AppState -> Picture
 drawGameOver state = if isGameOver state
     then pictures
