@@ -29,12 +29,12 @@ version :: Version
 version = Version [0,1,0,0] []
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
 
-bindir     = "E:\\Joke\\pr\\haskell\\snake_prac\\chervyak\\chervyak\\.stack-work\\install\\dfce1549\\bin"
-libdir     = "E:\\Joke\\pr\\haskell\\snake_prac\\chervyak\\chervyak\\.stack-work\\install\\dfce1549\\lib\\x86_64-windows-ghc-8.10.7\\chervyak-0.1.0.0-2aOtlC4GeY0LAbtMBeT4pd-chervyak-exe"
-dynlibdir  = "E:\\Joke\\pr\\haskell\\snake_prac\\chervyak\\chervyak\\.stack-work\\install\\dfce1549\\lib\\x86_64-windows-ghc-8.10.7"
-datadir    = "E:\\Joke\\pr\\haskell\\snake_prac\\chervyak\\chervyak\\.stack-work\\install\\dfce1549\\share\\x86_64-windows-ghc-8.10.7\\chervyak-0.1.0.0"
-libexecdir = "E:\\Joke\\pr\\haskell\\snake_prac\\chervyak\\chervyak\\.stack-work\\install\\dfce1549\\libexec\\x86_64-windows-ghc-8.10.7\\chervyak-0.1.0.0"
-sysconfdir = "E:\\Joke\\pr\\haskell\\snake_prac\\chervyak\\chervyak\\.stack-work\\install\\dfce1549\\etc"
+bindir     = "E:\\Joke\\pr\\haskell\\snake_prac\\123\\chervyak\\.stack-work\\install\\dfce1549\\bin"
+libdir     = "E:\\Joke\\pr\\haskell\\snake_prac\\123\\chervyak\\.stack-work\\install\\dfce1549\\lib\\x86_64-windows-ghc-8.10.7\\chervyak-0.1.0.0-2aOtlC4GeY0LAbtMBeT4pd-chervyak-exe"
+dynlibdir  = "E:\\Joke\\pr\\haskell\\snake_prac\\123\\chervyak\\.stack-work\\install\\dfce1549\\lib\\x86_64-windows-ghc-8.10.7"
+datadir    = "E:\\Joke\\pr\\haskell\\snake_prac\\123\\chervyak\\.stack-work\\install\\dfce1549\\share\\x86_64-windows-ghc-8.10.7\\chervyak-0.1.0.0"
+libexecdir = "E:\\Joke\\pr\\haskell\\snake_prac\\123\\chervyak\\.stack-work\\install\\dfce1549\\libexec\\x86_64-windows-ghc-8.10.7\\chervyak-0.1.0.0"
+sysconfdir = "E:\\Joke\\pr\\haskell\\snake_prac\\123\\chervyak\\.stack-work\\install\\dfce1549\\etc"
 
 getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir, getSysconfDir :: IO FilePath
 getBinDir = catchIO (getEnv "chervyak_bindir") (\_ -> return bindir)

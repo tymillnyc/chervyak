@@ -3,7 +3,19 @@ import Shared
 import System.Random
 --update app 
 updateApp :: Float -> AppState -> AppState
-updateApp _ appState
+updateApp upd state = 
+  case screen state of
+    NameField -> updateTextField upd state
+    Menu -> state
+    Table -> state
+    Game -> updateGame upd state
+ 
+updateTextField :: Float -> AppState -> AppState
+updateTextField _ appState = appState{visible = not (visible appState)}
+  
+
+updateGame :: Float -> AppState -> AppState
+updateGame _ appState
   | isGameOver appState = appState
   | inGrass (dx, dy) && not (isSnake (dx, dy) (snakeCoordinates appState))
     = if isFood (dx, dy) (foodCoordinates appState)
@@ -21,7 +33,7 @@ updateApp _ appState
                 CrawlRight -> (x + 1, y)
                 CrawlDown -> (x, y - 1)
                 CrawlLeft -> (x - 1, y)
- 
+        
 generateNewFood :: AppState -> AppState
 generateNewFood appState = if isSnake (dx, dy) (snakeCoordinates appState) 
                            then generateNewFood appState 

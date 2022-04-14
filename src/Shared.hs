@@ -62,12 +62,20 @@ rows :: Int
 rows = snd windowSize `div` round windowScale
 
 -- Directions of the game
-data Direction = CrawlUp | CrawlDown | CrawlLeft | CrawlRight
+data Direction = CrawlUp | CrawlDown | CrawlLeft | CrawlRight deriving Eq
+
+--Game screens
+data Screen = NameField | Menu | Table | Game deriving Eq
+
 
 -- where food located on the grid
 type Food = (Int, Int)
 -- where all parts of snake located on the grid
 type Snake = [(Int, Int)]
+
+type Record = (String, Int)
+
+type Records = [Record]
 
 -- main structure
 -- snakeCoordinates - coordinates of every part of snake
@@ -81,4 +89,9 @@ data AppState = AppState {
 , direction :: Direction
 , generator :: StdGen
 , isGameOver :: Bool
+, screen :: Screen
+, name :: String
+, visible :: Bool
+, selected :: Int
+, records :: Records
 }

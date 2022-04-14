@@ -3,13 +3,110 @@ import Shared
 import Graphics.Gloss
 
 drawApp :: AppState -> Picture
-drawApp state = pictures
+drawApp state = 
+  case screen state of
+    NameField -> drawNameField state
+    Menu -> drawMenu state
+    Table -> drawTable state
+    Game -> drawGame state
+  
+drawNameField :: AppState -> Picture
+drawNameField state = pictures 
+    [ drawBorders
+    , drawTextField state
+    ]
+
+drawTextField :: AppState -> Picture
+drawTextField state = pictures
+        [ color foodColor $ 
+          translate (-200) 0 $
+          scale 0.35 0.35 $
+          text "Enter your name"
+       ,  color (if (visible state) then blue else grassColor) $ 
+          translate (-250) (-100) $ 
+          scale 0.3 0.3 $ 
+          text ((name state) ++ "|")
+       ,  color blue $ 
+          translate (-250) (-100) $ 
+          scale 0.3 0.3 $ 
+          text (name state)
+       ,  color foodColor $ 
+          translate (-250) (-200) $ 
+          scale 0.3 0.3 $ 
+          text (
+            if (length (name state) /= 0) then 
+              "Press ENTER to continue" 
+            else 
+              ""
+          )
+        ]
+ 
+drawMenu :: AppState -> Picture
+drawMenu state = pictures
+    [ drawBorders
+    , drawMenuElements state
+    ]
+
+drawMenuElements :: AppState -> Picture
+drawMenuElements state = pictures
+      [ color wormColor $ 
+        translate (-115) 200 $
+        scale 0.4 0.4 $
+        text "Chervyak"
+      , color (if ((selected state) == 0) then foodColor else blue) $ 
+        translate (-50) (50) $ 
+        scale 0.3 0.3 $ 
+        text "Play"
+      , color (if ((selected state) == 1) then foodColor else blue) $ 
+        translate (-75) (-50) $ 
+        scale 0.3 0.3 $ 
+        text "Top 10"
+      , color (if ((selected state) == 2) then foodColor else blue) $ 
+        translate (-175) (-150) $ 
+        scale 0.3 0.3 $ 
+        text "Change your name"
+      , color wormColor $ 
+        translate (- (fromIntegral (length (name state)) * 8)) (-300) $ 
+        scale 0.2 0.2 $ 
+        text (name state)
+        ]
+
+drawTable :: AppState -> Picture
+drawTable state = pictures 
+    [ drawBorders
+    , drawTableElements state
+    ]
+
+drawTableElements :: AppState -> Picture
+drawTableElements state = pictures(
+          ([
+            color wormColor $ 
+            translate (-215) 250 $
+            scale 0.4 0.4 $
+            text "Top 10 players"
+          , color foodColor $ 
+            translate (-50) (-300) $
+            scale 0.3 0.3 $
+            text "exit"
+          ]) ++ (tableTiles (records state) 50))
+        
+
+tableTiles :: Records -> Float -> [Picture]
+tableTiles [] _ = []
+tableTiles (x:xs) offset = 
+        ((color blue $ 
+        translate (-100) (250 - offset) $
+        scale 0.2 0.2 $
+        text ((fst x) ++ " " ++ show (snd x))) : (tableTiles xs (offset + 50.0)))
+
+drawGame :: AppState -> Picture
+drawGame state = pictures
     [ drawBorders
     , drawFood state
     , drawSnake state
     , drawGameOver state
     ]
- 
+
 drawBorders :: Picture
 drawBorders  = pictures 
               [ fillBorder (fromIntegral columns / 2, 0) size1
@@ -56,8 +153,8 @@ drawGameOver state = if isGameOver state
           scale 0.4 0.4 $
           text $ "score: " ++ show ((length(snakeCoordinates state) - 2) * 5)
        ,  color blue $ 
-          translate (-250) (-100) $ 
+          translate (-300) (-100) $ 
           scale 0.3 0.3 $ 
-          text "Press SPACE to try again"
+          text "Press SPACE to go to menu"
         ]
     else pictures []

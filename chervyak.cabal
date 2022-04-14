@@ -26,7 +26,8 @@ source-repository head
 library
   exposed-modules:
       DrawApp
-      Lib
+      HandleEvent
+      InitState
       Shared
       UpdateApp
   other-modules:
