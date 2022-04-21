@@ -5,11 +5,11 @@ import System.Random
 -- decide which function to use based on current screen
 updateApp :: Float -> AppState -> IO AppState
 updateApp upd state = 
-  case screen state of
-    NameField -> return (updateTextField upd state)
-    Menu -> return state -- don't need to update anything
-    Table -> return state -- don't need to update anything
-    Game -> return (updateGame upd state)
+  return $ case screen state of
+    NameField -> updateTextField upd state
+    Menu -> state -- don't need to update anything
+    Table -> state -- don't need to update anything
+    Game -> (updateGame upd state)
  
 -- flickering
 updateTextField :: Float -> AppState -> AppState
